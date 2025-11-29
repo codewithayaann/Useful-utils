@@ -1,8 +1,16 @@
 # Utility Functions 
 
 ## Table of content
-1. [get](#after)
-2. 
+1. [size](#size)
+2. [after](#after)
+3. [once](#once)
+4. [get](#get)
+5. [memoize](#memoize)
+6. [isEqual](#isequal-react-usecase)
+7. [compose](#compose)
+8. [deepPick](#deeppick)
+9. [DTO mapper](#dto-mapper-utility)
+
 
 
 Copy the code blocks into a `.js` file and run with `node file.js`.
