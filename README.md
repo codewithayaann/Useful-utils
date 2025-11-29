@@ -268,40 +268,43 @@ Useful when:
   
 
 ```js
-import { useEffect, useRef } from  "react";
+import { useEffect, useRef } from "react";
 
-export  function  useDeepCompareEffect(effect:  any, deps:  any) {
-const prevDeps =  useRef(null);
+export function useDeepCompareEffect(effect: any, deps: any) {
+  const prevDeps = useRef(null);
 
-if (!isDeepEqual(prevDeps.current, deps)) {
-     prevDeps.current = deps;
-}
+  if (!isDeepEqual(prevDeps.current, deps)) {
+    prevDeps.current = deps;
+  }
 
-useEffect(effect, [prevDeps.current]);
-
+  useEffect(effect, [prevDeps.current]);
 }
 
   
-export  function  isDeepEqual(a:  any, b:  any) {
-    if (a === b) return  true;
-	if (
-	typeof a !==  "object"  ||
-	typeof b !==  "object"  ||
-	a ===  null  ||
-	b ===  null
-	) return  false;
+export function isDeepEqual(a: any, b: any) {
+  if (a === b) return true;
 
-const aKeys = Object.keys(a);
-const bKeys = Object.keys(b);
+  if (
+    typeof a !== "object" ||
+    typeof b !== "object" ||
+    a === null ||
+    b === null
+  ) {
+    return false;
+  }
 
-if (aKeys.length !== bKeys.length) return  false;
- 
-for (let key of aKeys) {
- if (!isDeepEqual(a[key], b[key])) return  false;
+  const aKeys = Object.keys(a);
+  const bKeys = Object.keys(b);
+
+  if (aKeys.length !== bKeys.length) return false;
+
+  for (let key of aKeys) {
+    if (!isDeepEqual(a[key], b[key])) return false;
+  }
+
+  return true;
 }
 
-return  true;
-}
 
 ```
 
@@ -528,19 +531,25 @@ const response = {
   meta: { created: "12/12/2012" }
 };
 
-const mapper = { name: "user.name", 
-               age: { path: "user.age", transform: (v) => v || 10 }, 
-               userSkill: { 
-			             path:  "user.skills",
-                         transform: (v) => v.map((item) => item.toUpperCase())
-                         },
-               meta: { 
-                  metaCreated: { 
-                            path: "meta.created", 
-                            transform: (v) => new Date(v).toISOString()
-                           } 
-                       } 
-                   };
+const mapper = {
+  name: "user.name",
+  age: {
+    path: "user.age",
+    transform: (v) => v || 10
+  },
+
+  userSkill: {
+    path: "user.skills",
+    transform: (v) => v.map((item) => item.toUpperCase())
+  },
+
+  meta: {
+    metaCreated: {
+      path: "meta.created",
+      transform: (v) => new Date(v).toISOString()
+    }
+  }
+};
 
 
 dto(response, mapper);
