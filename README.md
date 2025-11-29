@@ -466,7 +466,7 @@ console.log(picked);
 
 ------
 
-## DTO Mapper Utility
+## DTO(Data Transfer Object)
 
 This small helper lets you **convert any API response into a clean DTO** using a simple mapping definition.  
 
