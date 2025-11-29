@@ -497,6 +497,32 @@ The mapper can contain:
 
 ### Input Data
 ```js
+
+/***
+dto: Maps a data object to a DTO using a mapping definition *
+@param {Object} data - The API response or source object *
+@param {Object} mapper - Mapping definition * @returns {Object} - Transformed DTO */
+
+function dto(data, mapper) {
+  const result = {};
+  for (const key in mapper) {
+    const rule = mapper[key]; // Case 1: String mapping (deep path)
+    if (typeof rule === "string") {
+      result[key] = get(data, rule);
+    } // Case 2: Object with path and optional transform
+    else if (rule.path) {
+      const rawValue = get(data, rule.path);
+      result[key] = rule.transform ? rule.transform(rawValue, data) : rawValue;
+    }
+    // Case 3: Nested object mapping
+    else if (typeof rule === "object") {
+      result[key] = dto(data, rule);
+    }
+  }
+  return result;
+}
+
+
 const response = {
   user: { name: "ayaan", age: null, skills: ["java", "node", "html"] },
   meta: { created: "12/12/2012" }
