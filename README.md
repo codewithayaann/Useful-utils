@@ -9,7 +9,7 @@
 6. [isEqual](#isequal-react-usecase)
 7. [compose](#compose)
 8. [deepPick](#deeppick)
-9. [DTO mapper](#dto-mapper-utility)
+9. [DTO mapper](#dtodata-transfer-object)
 
 
 
